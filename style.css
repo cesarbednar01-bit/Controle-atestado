@@ -594,45 +594,98 @@ tbody tr:hover {
   }
 }
 
+/* =========================================
+   RESPONSIVIDADE MOBILE
+========================================= */
+
 @media (max-width: 760px) {
+
+  /* Sidebar mobile */
   .sidebar {
-    width: 75px;
-    padding: 18px 10px;
+    width: 190px;
+    padding: 18px 12px;
+
+    overflow-y: auto;
   }
 
   .brand {
-    padding: 5px 0 20px;
+    padding: 5px 5px 20px;
+
     justify-content: center;
   }
 
-  .sidebar-footer,
-  .nav-item {
-    font-size: 0;
+  .logo-toex {
+    width: 150px;
+  }
+
+  /* Menu continua mostrando os textos */
+  nav {
+    margin-top: 18px;
+    gap: 6px;
   }
 
   .nav-item {
-    height: 46px;
-    padding: 0;
-    text-align: center;
+    width: 100%;
+
+    height: 44px;
+
+    padding: 0 12px;
+
+    display: flex;
+    align-items: center;
+
+    text-align: left;
+
+    font-size: 13px;
+    font-weight: 600;
   }
 
+  /* Botão sair */
+  .sidebar-footer {
+    margin-top: auto;
+  }
+
+  .logout-btn {
+    width: 100%;
+
+    padding: 11px 12px;
+
+    font-size: 13px;
+  }
+
+  .logout-icon {
+    width: 20px;
+    font-size: 19px;
+  }
+
+
+  /* Conteúdo principal */
   .main {
-    margin-left: 75px;
-    width: calc(100% - 75px);
-    padding: 20px 14px;
+    margin-left: 190px;
+
+    width: calc(100% - 190px);
+
+    padding: 18px 12px 35px;
   }
 
+
+  /* Cabeçalho */
   .topbar {
-    align-items: flex-end;
+    align-items: flex-start;
+
+    gap: 12px;
   }
 
   h1 {
     font-size: 23px;
   }
 
+
+  /* Filtros */
   .filters-card,
   .form-grid {
     display: grid;
+
     grid-template-columns: 1fr;
   }
 
@@ -640,16 +693,70 @@ tbody tr:hover {
     grid-column: auto;
   }
 
+
+  /* Cards */
   .cards-grid {
     grid-template-columns: 1fr 1fr;
   }
 
+
+  /* Dashboard */
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  /* Responsáveis */
   .shift-responsibles {
     grid-template-columns: 1fr;
   }
 
+
+  /* Cálculos */
   .calculation-box {
     grid-template-columns: 1fr 1fr 1fr;
+  }
+
+
+  /* Formulário */
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+
+
+  /* Histórico */
+  .history-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .history-filters .field {
+    min-width: 0;
+  }
+
+  .history-filters button {
+    width: 100%;
+  }
+
+
+  /* Tabelas */
+  .table-wrap {
+    width: 100%;
+
+    overflow-x: auto;
+
+    -webkit-overflow-scrolling: touch;
+  }
+
+
+  /* Painéis */
+  .panel {
+    padding: 16px;
+
+    border-radius: 12px;
   }
 }
 
@@ -706,22 +813,27 @@ tbody tr:hover {
 .history-filters {
   flex-wrap: wrap;
 }
+
 .history-filters .field {
   min-width: 180px;
 }
+
 .history-filters .secondary-btn,
 .history-filters .primary-btn {
   flex-shrink: 0;
 }
+
 @media (max-width: 900px) {
   .history-filters {
     display: grid;
     grid-template-columns: 1fr 1fr;
   }
+
   .history-filters .field {
     min-width: 0;
   }
 }
+
 @media (max-width: 600px) {
   .history-filters {
     grid-template-columns: 1fr;
