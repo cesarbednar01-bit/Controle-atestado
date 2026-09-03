@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <script>
+    if (sessionStorage.getItem("atestado_logged") !== "true") {
+      window.location.replace("index.html");
+    }
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controle de Atestados | 30 Dias</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="logo-toex.png" alt="TOEX - Terminal Oeste de Exportação" class="logo-toex">
+      </div>
+
+      <nav>
+        <button class="nav-item active" data-page="dashboard">Dashboard</button>
+        <button class="nav-item" data-page="lancamento">Lançar atestado</button>
+        <button class="nav-item" data-page="historico">Histórico</button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="logout-btn" id="logoutBtn" type="button">
+          <span class="logout-icon" aria-hidden="true">↪</span>
+          <span>Sair</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">CONTROLE OPERACIONAL</p>
+          <h1 id="pageTitle">Dashboard</h1>
+        </div>
+        <button class="primary-btn" id="quickLaunch">+ Lançar atestado</button>
+      </header>
+
+      <section id="dashboard" class="page active">
+        <div class="filters-card">
+          <div class="field">
+            <label>Período inicial</label>
+            <input type="date" id="dashStart">
+          </div>
+          <div class="field">
+            <label>Período final</label>
+            <input type="date" id="dashEnd">
+          </div>
+          <button class="secondary-btn" id="applyDashboard">Atualizar</button>
+        </div>
+
+        <div class="cards-grid">
+          <article class="metric-card">
+            <span>Colaboradores</span>
+            <strong id="metricEmployees">0</strong>
+            <small>com lançamento</small>
+          </article>
+          <article class="metric-card">
+            <span>Atestados</span>
+            <strong id="metricCertificates">0</strong>
+            <small>no período</small>
+          </article>
+          <article class="metric-card danger">
+            <span>Dias de atestado</span>
+            <strong id="metricSickDays">0</strong>
+            <small>dias corridos</small>
+          </article>
+          <article class="metric-card warning">
+            <span>Dias de folga</span>
+            <strong id="metricOffDays">0</strong>
+            <small>informados manualmente</small>
+          </article>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="panel chart-panel">
+            <div class="panel-header">
+              <div>
+                <h2>Distribuição dos 30 dias</h2>
+                <p>Trabalhados × atestado × folgas</p>
+              </div>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="distributionChart"></canvas>
+            </div>
+          </article>
+
+        </div>
+
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Últimos lançamentos</h2>
+              <p>Atestados registrados recentemente</p>
+            </div>
+            <button class="text-btn" data-page-target="historico">Ver histórico →</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Colaborador</th>
+                  <th>Chefe de turno</th>
+                  <th>Início</th>
+                  <th>Fim</th>
+                  <th>Dias</th>
+                  <th>Folgas</th>
+                </tr>
+              </thead>
+              <tbody id="recentTable"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section id="lancamento" class="page">
+        <article class="panel form-panel">
+          <div class="panel-header">
+            <div>
+              <h2>Novo atestado</h2>
+              <p>Informe o período e, se houver, as folgas dentro dos 30 dias.</p>
+            </div>
+          </div>
+
+          <form id="certificateForm">
+            <div class="form-grid">
+              <div class="field full">
+                <label for="employee">Colaborador *</label>
+                <input type="text" id="employee" required placeholder="Digite o nome do colaborador" autocomplete="off">
+              </div>
+
+              <div class="field full">
+                <label for="shiftChief">Chefe de turno *</label>
+                <select id="shiftChief" required>
+                  <option value="">Selecione o chefe de turno</option>
+                  <option value="Jean Marcelo Costa de Souza">Jean Marcelo Costa de Souza</option>
+                  <option value="Osvaldo Silva Daveis Filho">Osvaldo Silva Daveis Filho</option>
+                  <option value="Juliano dos Santos Lima">Juliano dos Santos Lima</option>
+                  <option value="Anderson Neves da Silva">Anderson Neves da Silva</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="startDate">Data inicial *</label>
+                <input type="date" id="startDate" required>
+              </div>
+
+              <div class="field">
+                <label for="days">Quantidade de dias *</label>
+                <input type="number" id="days" min="1" max="30" required>
+              </div>
+
+              <div class="field">
+                <label for="endDate">Data final</label>
+                <input type="date" id="endDate" readonly>
+              </div>
+
+              <div class="field">
+                <label>Teve folga durante o atestado?</label>
+                <div class="folga-opcoes">
+                  <label><input type="radio" name="teveFolga" value="nao" checked><span>Não</span></label>
+                  <label><input type="radio" name="teveFolga" value="sim"><span>Sim</span></label>
+                </div>
+              </div>
+
+              <div id="periodoFolga" class="periodo-folga hidden">
+                <div class="field">
+                  <label for="folgaInicio">Data inicial da folga</label>
+                  <input type="date" id="folgaInicio">
+                </div>
+                <div class="field">
+                  <label for="folgaFim">Data final da folga</label>
+                  <input type="date" id="folgaFim">
+                </div>
+              </div>
+
+              <div class="field full">
+                <label for="observation">Observação</label>
+                <input type="text" id="observation" maxlength="180" placeholder="Opcional">
+              </div>
+
+            </div>
+
+            <div id="periodPreview" class="period-preview hidden">
+              <div class="preview-heading">
+                <div>
+                  <h3>Resumo do período</h3>
+                  <p>Resumo calculado automaticamente.</p>
+                </div>
+                <span id="previewTotal">0 dias</span>
+              </div>
+              <div class="calculation-box">
+                <div><span>Atestado</span><strong id="calcSick">0</strong></div>
+                <div><span>Folgas</span><strong id="calcOff">0</strong></div>
+                <div><span>Trabalho afetado</span><strong id="calcWork">0</strong></div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="secondary-btn" id="clearForm">Limpar</button>
+              <button type="submit" class="primary-btn">Salvar atestado</button>
+            </div>
+          </form>
+        </article>
+      </section>
+
+      <section id="historico" class="page">
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Histórico de atestados</h2>
+              <p>Consulte e acompanhe todos os lançamentos.</p>
+            </div>
+          </div>
+
+          <div class="filters-card compact history-filters">
+            <div class="field">
+              <label for="historySearch">Buscar colaborador</label>
+              <input type="search" id="historySearch" placeholder="Nome do colaborador">
+            </div>
+            <div class="field">
+              <label for="historyStart">Data inicial</label>
+              <input type="date" id="historyStart">
+            </div>
+            <div class="field">
+              <label for="historyEnd">Data final</label>
+              <input type="date" id="historyEnd">
+            </div>
+            <button class="secondary-btn" id="applyHistory" type="button">Filtrar</button>
+            <button class="primary-btn" id="exportPdf" type="button">📄 Exportar PDF</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Colaborador</th>
+                  <th>Chefe de turno</th>
+                  <th>Período</th>
+                  <th>Atestado</th>
+                  <th>Folgas</th>
+                  <th>Trabalho afetado</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="historyTable"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+
+    </main>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>

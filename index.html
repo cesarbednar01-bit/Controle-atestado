@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Controle de Atestados</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <main class="login-page">
+    <section class="login-panel">
+      <div class="login-content">
+        <div class="logo-area">
+          <img src="logo-toex.png" alt="TOEX - Terminal Oeste de Exportação">
+        </div>
+
+        <div class="login-title">
+          <h1>Acesse sua <span>conta</span></h1>
+          <p>Informe suas credenciais para entrar no sistema.</p>
+        </div>
+
+        <form id="loginForm" autocomplete="on">
+          <div class="input-group">
+            <label for="username">Usuário</label>
+            <div class="input-box">
+              <span class="input-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>
+              </span>
+              <input type="text" id="username" placeholder="Digite seu usuário" autocomplete="username" required>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="password">Senha</label>
+            <div class="input-box">
+              <span class="input-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+              </span>
+              <input type="password" id="password" placeholder="Digite sua senha" autocomplete="current-password" required>
+              <button type="button" class="show-password" id="togglePassword" aria-label="Mostrar senha">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.5"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div id="loginError" class="login-error" role="alert">Usuário ou senha incorretos.</div>
+
+          <button type="submit" class="login-button">Entrar</button>
+        </form>
+
+        <div class="login-footer">
+          <span>TOEX Terminal Oeste de Exportação</span>
+          <span>© 2026 Todos os direitos reservados.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="image-panel" aria-label="Controle operacional">
+      <div class="image-overlay"></div>
+      <div class="image-content">
+        <span>CONTROLE OPERACIONAL</span>
+        <h2>Gestão de atestados</h2>
+        <p>Controle, acompanhamento e análise dos períodos de afastamento.</p>
+      </div>
+    </section>
+  </main>
+  <script src="login.js"></script>
+</body>
+</html>

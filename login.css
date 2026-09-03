@@ -1,0 +1,218 @@
+:root {
+  --navy: #061b32;
+  --navy-2: #082640;
+  --orange: #ff7900;
+  --white: #ffffff;
+  --muted: rgba(255,255,255,.72);
+  --line: rgba(255,255,255,.20);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  font-family: Inter, Arial, sans-serif;
+  background: var(--navy);
+  color: var(--white);
+}
+button, input { font: inherit; }
+button { cursor: pointer; }
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  overflow: hidden;
+  background: #061b32;
+}
+
+.login-panel {
+  width: 43%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(135deg, #0a2b49 0%, #08243f 52%, #061d35 100%);
+}
+
+.login-content {
+  width: 100%;
+  min-height: 100vh;
+  padding: 58px 18.5% 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-area { margin-bottom: 72px; }
+.logo-area img {
+  display: block;
+  width: 330px;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.login-title { margin-bottom: 34px; }
+.login-title h1 {
+  margin: 0 0 10px;
+  font-size: clamp(31px, 2.7vw, 42px);
+  line-height: 1.08;
+  letter-spacing: -1.2px;
+  font-weight: 800;
+}
+.login-title h1 span { color: var(--orange); }
+.login-title p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+#loginForm { width: 100%; }
+.input-group { margin-bottom: 25px; }
+.input-group label {
+  display: block;
+  margin-bottom: 9px;
+  font-size: 14px;
+  font-weight: 700;
+}
+.input-box {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: rgba(255,255,255,.035);
+  transition: .2s ease;
+}
+.input-box:focus-within {
+  border-color: rgba(255,121,0,.75);
+  box-shadow: 0 0 0 3px rgba(255,121,0,.10);
+}
+.input-icon {
+  width: 56px;
+  display: grid;
+  place-items: center;
+  color: #e7edf4;
+  flex: 0 0 56px;
+}
+.input-icon svg, .show-password svg { width: 21px; height: 21px; }
+.input-box input {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  color: #fff;
+  background: transparent;
+  font-size: 15px;
+}
+.input-box input::placeholder { color: rgba(255,255,255,.52); }
+.show-password {
+  width: 52px;
+  height: 100%;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  flex: 0 0 52px;
+  opacity: .9;
+}
+.show-password:hover { color: var(--orange); }
+
+.login-button {
+  width: 100%;
+  height: 56px;
+  border: 0;
+  border-radius: 9px;
+  background: linear-gradient(90deg, #ff7900, #ff861b);
+  color: #fff;
+  font-weight: 800;
+  font-size: 16px;
+  box-shadow: 0 12px 28px rgba(255,121,0,.18);
+  transition: transform .18s ease, filter .18s ease;
+}
+.login-button:hover { filter: brightness(1.05); transform: translateY(-1px); }
+.login-button:active { transform: translateY(0); }
+
+.login-error {
+  display: none;
+  margin: -8px 0 14px;
+  color: #ffb0a8;
+  font-size: 13px;
+  font-weight: 600;
+}
+.login-error.show { display: block; }
+
+.login-footer {
+  margin-top: auto;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255,255,255,.12);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: rgba(255,255,255,.68);
+  font-size: 12px;
+}
+
+.image-panel {
+  position: relative;
+  width: 57%;
+  min-height: 100vh;
+  background-image: url("porto-login.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(2,18,38,.48) 0%, rgba(2,18,38,.16) 48%, rgba(2,18,38,.10) 100%);
+  z-index: 1;
+}
+
+.image-content {
+  position: absolute;
+  left: 12%;
+  right: 8%;
+  bottom: 10.5%;
+  z-index: 2;
+}
+.image-content span {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--orange);
+  font-size: 13px;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+.image-content h2 {
+  margin: 0 0 10px;
+  color: #fff;
+  font-size: clamp(32px, 3.2vw, 50px);
+  line-height: 1.08;
+  letter-spacing: -1px;
+  font-weight: 800;
+}
+.image-content p {
+  max-width: 620px;
+  margin: 0;
+  color: rgba(255,255,255,.90);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+@media (max-width: 900px) {
+  .login-panel { width: 100%; }
+  .image-panel { display: none; }
+  .login-content { padding: 42px 8%; }
+  .logo-area { margin-bottom: 58px; }
+}
+
+@media (max-width: 520px) {
+  .login-content { padding: 32px 22px; }
+  .logo-area img { width: 205px; }
+  .login-title h1 { font-size: 31px; }
+}
