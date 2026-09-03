@@ -825,7 +825,7 @@ tbody tr:hover {
 
 @media (max-width: 900px) {
   .history-filters {
-    display: grid;
+    display: grid;  
     grid-template-columns: 1fr 1fr;
   }
 
