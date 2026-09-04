@@ -1,77 +1,80 @@
+import {
+    signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+import { auth } from "./firebase.js";
+
 const loginForm = document.getElementById("loginForm");
 const username = document.getElementById("username");
 const password = document.getElementById("password");
 const loginError = document.getElementById("loginError");
 const togglePassword = document.getElementById("togglePassword");
 
-// Usuários autorizados
-const usuariosValidos = [
-    {
-        usuario: "admin",
-        senha: "123456"
-    },
-    {
-        usuario: "Matias.toex",
-        senha: "Matias47"
-    }
-];
-
-// Se já estiver logado, vai direto para o Dashboard
-if (sessionStorage.getItem("atestado_logged") === "true") {
-    window.location.replace("dashboard.html");
-}
+// Usuários do sistema
+// O usuário digita o nome abaixo, mas o Firebase autentica pelo e-mail.
+const usuarios = {
+    "admin": "junior.bednarczuk01@gmail.com",
+    "Matias.toex": "matiasdacargill@gmail.com"
+};
 
 // Mostrar / ocultar senha
-togglePassword.addEventListener("click", () => {
-    const showing = password.type === "text";
+if (togglePassword) {
+    togglePassword.addEventListener("click", () => {
+        const mostrando = password.type === "text";
 
-    password.type = showing ? "password" : "text";
+        password.type = mostrando ? "password" : "text";
 
-    togglePassword.setAttribute(
-        "aria-label",
-        showing ? "Mostrar senha" : "Ocultar senha"
-    );
-});
+        togglePassword.setAttribute(
+            "aria-label",
+            mostrando ? "Mostrar senha" : "Ocultar senha"
+        );
+    });
+}
 
 // Login
-loginForm.addEventListener("submit", (event) => {
+loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const usuario = username.value.trim();
-    const senha = password.value;
+    const usuarioDigitado = username.value.trim();
+    const senhaDigitada = password.value;
 
-    // Procura o usuário e senha na lista
-    const usuarioEncontrado = usuariosValidos.find(
-        item =>
-            item.usuario === usuario &&
-            item.senha === senha
-    );
+    // Limpa erro anterior
+    loginError.classList.remove("show");
 
-    if (usuarioEncontrado) {
-        // Salva a sessão
-        sessionStorage.setItem("atestado_logged", "true");
+    // Verifica se o usuário existe no sistema
+    const email = usuarios[usuarioDigitado];
 
-        // Salva qual usuário entrou
-        sessionStorage.setItem(
-            "atestado_usuario",
-            usuarioEncontrado.usuario
-        );
-
-        // Vai para o Dashboard
-        window.location.replace("dashboard.html");
-
+    if (!email) {
+        loginError.textContent = "Usuário ou senha inválidos.";
+        loginError.classList.add("show");
+        password.value = "";
+        password.focus();
         return;
     }
 
-    // Login incorreto
-    loginError.classList.add("show");
+    try {
+        // Autenticação pelo Firebase
+        await signInWithEmailAndPassword(
+            auth,
+            email,
+            senhaDigitada
+        );
 
-    password.value = "";
+        // Login realizado
+        window.location.replace("dashboard.html");
 
-    password.focus();
+    } catch (error) {
+        console.error("Erro ao realizar login:", error);
+
+        loginError.textContent = "Usuário ou senha inválidos.";
+        loginError.classList.add("show");
+
+        password.value = "";
+        password.focus();
+    }
 });
 
-// Remove mensagem de erro ao digitar
+// Remove a mensagem de erro ao digitar novamente
 username.addEventListener("input", () => {
     loginError.classList.remove("show");
 });
